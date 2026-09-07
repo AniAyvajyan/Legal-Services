@@ -1,1 +1,570 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurelius & Vance | Counsel for the Exceptional</title>
+    
+    <!-- Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           CSS VARIABLES & RESET
+           ========================================= */
+        :root {
+            --bg-primary: #0a0a0a;       /* Obsidian */
+            --bg-secondary: #121212;     /* Charcoal */
+            --text-primary: #f5f5f0;     /* Alabaster */
+            --text-secondary: #a3a39e;   /* Muted Stone */
+            --accent: #c5a059;           /* Muted Champagne Gold */
+            --border: rgba(245, 245, 240, 0.1);
+            
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+            
+            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* =========================================
+           UTILITY CLASSES
+           ========================================= */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5vw;
+        }
+
+        .section-label {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================================
+           NAVIGATION
+           ========================================= */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 2rem 5vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            background: transparent;
+        }
+
+        header.scrolled {
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5vw;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        nav a {
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .btn-inquiry {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 0.8rem 1.8rem;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .btn-inquiry:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        /* =========================================
+           HERO SECTION
+           ========================================= */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1920') center/cover no-repeat;
+            opacity: 0.15;
+            filter: grayscale(80%);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.9) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(3rem, 7vw, 6.5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 550px;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .hero-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        /* =========================================
+           PHILOSOPHY / ABOUT
+           ========================================= */
+        .philosophy {
+            padding: 15vh 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 8vw;
+            align-items: start;
+        }
+
+        .philosophy h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 300;
+            line-height: 1.2;
+        }
+
+        .philosophy-text p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.9;
+        }
+
+        /* =========================================
+           PRACTICES (SERVICES)
+           ========================================= */
+        .practices {
+            padding: 15vh 0;
+            background: var(--bg-secondary);
+        }
+
+        .practices-header {
+            text-align: center;
+            margin-bottom: 10vh;
+        }
+
+        .practices-header h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 300;
+        }
+
+        .practices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2px; /* Creates a subtle grid line effect */
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .practice-item {
+            background: var(--bg-secondary);
+            padding: 4rem 3rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .practice-item:hover {
+            background: var(--bg-primary);
+        }
+
+        .practice-item .number {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            color: var(--accent);
+            opacity: 0.3;
+            display: block;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .practice-item:hover .number {
+            opacity: 1;
+        }
+
+        .practice-item h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+        }
+
+        .practice-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* =========================================
+           PRIVATE INQUIRY (CONTACT)
+           ========================================= */
+        .inquiry {
+            padding: 15vh 0;
+            text-align: center;
+        }
+
+        .inquiry h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .inquiry p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .contact-details {
+            display: flex;
+            justify-content: center;
+            gap: 5rem;
+            margin-top: 5rem;
+            padding-top: 5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-block h4 {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .contact-block p {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        /* =========================================
+           FOOTER
+           ========================================= */
+        footer {
+            padding: 3rem 5vw;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+        }
+
+        /* =========================================
+           RESPONSIVE DESIGN
+           ========================================= */
+        @media (max-width: 992px) {
+            nav ul {
+                display: none; /* Hide main nav on mobile for simplicity, replace with hamburger in production */
+            }
+            
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .contact-details {
+                flex-direction: column;
+                gap: 2rem;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .practice-item {
+                padding: 3rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <header id="navbar">
+        <a href="#" class="logo">Aurelius <span>&</span> Vance</a>
+        <nav>
+            <ul>
+                <li><a href="#philosophy">The Firm</a></li>
+                <li><a href="#practices">Practices</a></li>
+                <li><a href="#counsel">Counsel</a></li>
+                <li><a href="#insights">Insights</a></li>
+            </ul>
+        </nav>
+        <a href="#inquiry" class="btn-inquiry">Private Inquiry</a>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="hero-divider fade-in"></div>
+            <h1 class="fade-in">Counsel for the <em>Exceptional</em>.</h1>
+            <p class="fade-in">We provide discreet, bespoke legal strategy to safeguard the assets, reputation, and legacy of high-net-worth individuals, families, and global enterprises.</p>
+        </div>
+    </section>
+
+    <!-- PHILOSOPHY SECTION -->
+    <section class="philosophy" id="philosophy">
+        <div class="container">
+            <div class="philosophy-grid">
+                <div class="fade-in">
+                    <span class="section-label">Our Philosophy</span>
+                    <h2>Architects of Legacy & Resolution.</h2>
+                </div>
+                <div class="philosophy-text fade-in">
+                    <p>In a world of increasing complexity and scrutiny, true counsel requires more than legal expertise; it demands absolute discretion, strategic foresight, and an unwavering commitment to your objectives.</p>
+                    <p>We do not merely react to legal challenges. We anticipate them. We engineer resolutions with precision, navigating cross-border complexities and high-stakes disputes to protect what you have built.</p>
+                    <p>Our partners operate with the agility of a boutique firm and the intellectual firepower of a global institution, ensuring your matters are handled by the most senior minds in the profession.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRACTICES SECTION -->
+    <section class="practices" id="practices">
+        <div class="container">
+            <div class="practices-header fade-in">
+                <span class="section-label">Core Practices</span>
+                <h2>Bespoke Strategy Across Complex Disciplines</h2>
+            </div>
+            <div class="practices-grid fade-in">
+                <div class="practice-item">
+                    <span class="number">01</span>
+                    <h3>Private Client & Wealth</h3>
+                    <p>Safeguarding generational assets through bespoke trust structuring, tax optimization, and cross-border estate planning.</p>
+                </div>
+                <div class="practice-item">
+                    <span class="number">02</span>
+                    <h3>Corporate & M&A</h3>
+                    <p>Advising boards and founders on complex mergers, private equity transactions, and corporate restructuring with absolute confidentiality.</p>
+                </div>
+                <div class="practice-item">
+                    <span class="number">03</span>
+                    <h3>Dispute Resolution</h3>
+                    <p>Engineering precise resolutions in high-stakes commercial litigation, international arbitration, and sensitive reputation management.</p>
+                </div>
+                <div class="practice-item">
+                    <span class="number">04</span>
+                    <h3>Family Office Advisory</h3>
+                    <p>Providing comprehensive legal architecture for single and multi-family offices, encompassing governance, investments, and philanthropy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRIVATE INQUIRY SECTION -->
+    <section class="inquiry" id="inquiry">
+        <div class="container">
+            <div class="fade-in">
+                <span class="section-label">Private Inquiry</span>
+                <h2>Initiate a Confidential Dialogue.</h2>
+                <p>All inquiries are handled with the utmost discretion. To discuss your matter directly with a senior partner, please utilize our secure channel below.</p>
+                <a href="#" class="btn-inquiry">Request Consultation</a>
+            </div>
+            
+            <div class="contact-details fade-in">
+                <div class="contact-block">
+                    <h4>London</h4>
+                    <p>1 Grosvenor Place<br>SW1X 7EF</p>
+                </div>
+                <div class="contact-block">
+                    <h4>New York</h4>
+                    <p>432 Park Avenue<br>NY 10022</p>
+                </div>
+                <div class="contact-block">
+                    <h4>Direct Line</h4>
+                    <p>+44 (0) 20 7946 0958<br>intake@aureliusvance.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Aurelius & Vance. All rights reserved.</p>
+        <p>Privacy Policy &nbsp;|&nbsp; Terms of Engagement &nbsp;|&nbsp; Security Protocols</p>
+    </footer>
+
+    <!-- JAVASCRIPT FOR ANIMATIONS & SCROLL EFFECTS -->
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll-triggered fade-in animations
+        const faders = document.querySelectorAll('.fade-in');
+        const appearOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+    </script>
+
+</body>
+</html>
